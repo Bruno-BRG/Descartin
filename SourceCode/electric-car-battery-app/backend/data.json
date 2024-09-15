@@ -4,5 +4,12 @@
         "capacity": "3",
         "voltage": "-1",
         "manufacturer": "2"
+    },
+    {
+        "model": "1",
+        "capacity": "1",
+        "voltage": "1",
+        "manufacturer": "1",
+        "id": "26994154"
     }
 ]
