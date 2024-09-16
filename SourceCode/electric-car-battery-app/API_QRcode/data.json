@@ -81,5 +81,26 @@
         "voltage": "8",
         "manufacturer": "c",
         "id": "60423652"
+    },
+    {
+        "model": "1",
+        "capacity": "1",
+        "voltage": "1",
+        "manufacturer": "1",
+        "id": "81505250"
+    },
+    {
+        "model": "1111",
+        "capacity": "1",
+        "voltage": "1",
+        "manufacturer": "1",
+        "id": "85639940"
+    },
+    {
+        "model": "5",
+        "capacity": "2",
+        "voltage": "2",
+        "manufacturer": "5",
+        "id": "90937291"
     }
 ]

@@ -9,7 +9,7 @@ document.getElementById('batteryForm').addEventListener('submit', async function
     };
 
     // Send data to backend API
-    const response = await fetch('http://192.168.1.77:3000/generate-qrcode', {
+    const response = await fetch('http://172.20.98.173:3000/generate-qrcode', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
