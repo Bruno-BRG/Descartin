@@ -1,0 +1,50 @@
+[
+    {
+        "model": "10",
+        "capacity": "3",
+        "voltage": "-1",
+        "manufacturer": "2"
+    },
+    {
+        "model": "1",
+        "capacity": "1",
+        "voltage": "1",
+        "manufacturer": "1",
+        "id": "26994154"
+    },
+    {
+        "model": "1",
+        "capacity": "1",
+        "voltage": "1",
+        "manufacturer": "1",
+        "id": "51329214"
+    },
+    {
+        "model": "1",
+        "capacity": "1",
+        "voltage": "1",
+        "manufacturer": "1",
+        "id": "42223658"
+    },
+    {
+        "model": "1",
+        "capacity": "1",
+        "voltage": "1",
+        "manufacturer": "1",
+        "id": "03357613"
+    },
+    {
+        "model": "1",
+        "capacity": "1",
+        "voltage": "1",
+        "manufacturer": "1",
+        "id": "66968851"
+    },
+    {
+        "model": "1",
+        "capacity": "1",
+        "voltage": "11",
+        "manufacturer": "1",
+        "id": "67111872"
+    }
+]
