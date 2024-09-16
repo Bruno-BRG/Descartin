@@ -59,4 +59,4 @@ def save_data_to_json(data):
         json.dump(existing_data, file, indent=4)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3000)
+    app.run(host='192.168.1.77', port=3000)

@@ -11,4 +11,4 @@ def serve_file(path):
     return send_from_directory(app.static_folder, path)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3003)
+    app.run(host='192.168.1.77', port=3003)
