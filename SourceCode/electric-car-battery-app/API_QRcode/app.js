@@ -2,11 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const QRCode = require('qrcode');
 const fs = require('fs');
+const path = require('path');
 
 const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/generate-qrcode', async (req, res) => {
     const { batteryInfo } = req.body;
@@ -26,5 +30,5 @@ app.post('/generate-qrcode', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server is running on http://localhost:${port}`);
 });
