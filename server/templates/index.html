@@ -1,0 +1,20 @@
+# i want a html pgaee that will disply the images on the screen 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Gallery</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="gallery">
+            {% for file in files %}
+                <div class="gallery-item">
+                    <img src="{{ url_for('static', filename='2014Graphs/' + file) }}" alt="{{ file }}">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
+

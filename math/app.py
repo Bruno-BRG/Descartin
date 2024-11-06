@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load the CSV file
-df = pd.read_csv('data.csv')
+df = pd.read_csv('CSV/data.csv')
 
 # Remove any leading/trailing whitespace and extra quotes from column names
 df.columns = df.columns.str.strip().str.replace('"', '')
