@@ -7,14 +7,20 @@
 </head>
 <body>
     <div class="container">
-        <div class="gallery">
-            {% for file in files %}
-                <div class="gallery-item">
-                    <img src="{{ url_for('static', filename='2014Graphs/' + file) }}" alt="{{ file }}">
-                </div>
-            {% endfor %}
+        <div class="image-selector">
+            <label for="imageSelect">Choose an image:</label>
+            <select id="imageSelect" onchange="updateImage()">
+                {% for file in files %}
+                    <option value="{{ url_for('static', filename='2014Graphs/' + file) }}">{{ file }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="image-display">
+            <img id="displayedImage" src="{{ url_for('static', filename='2014Graphs/' + files[0]) }}" alt="Selected Image">
         </div>
     </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
 
