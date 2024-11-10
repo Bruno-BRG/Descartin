@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Graph Dashboard</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
 <body>
   <!-- Header -->
@@ -19,39 +20,39 @@
     <div class="filter-section">
       <h2>Filters</h2>
       <label for="residue-type">Residue Type</label>
-      <select id="residue-type">
+      <select id="residue-type" onchange="filterImages()">
         <option value="all">All Types</option>
-        {% for type in types %}
-        <option value="{{ type }}">{{ type.capitalize() }}</option>
+        {% for file in files %}
+        {% if file.endswith('.png') %}
+        <option value="{{ file[:-4] }}">{{ file[:-4].capitalize() }}</option>
+        {% endif %}
         {% endfor %}
       </select>
-      
+
+      <!-- Time Filter Section -->
       <label for="start-date">Start Date</label>
-      <input type="date" id="start-date">
-      
+      <select id="start-date">
+        {% for year in range(2014, 2025) %}
+        <option value="{{ year }}">{{ year }}</option>
+        {% endfor %}
+      </select>
+
       <label for="end-date">End Date</label>
-      <input type="date" id="end-date">
+      <select id="end-date">
+        {% for year in range(2014, 2025) %}
+        <option value="{{ year }}">{{ year }}</option>
+        {% endfor %}
+      </select>
     </div>
 
-    <!-- Graph Section -->
-    <div class="graph-section">
-      <!-- Placeholder for Graphs -->
+    <!-- Images Section -->
+    <div class="images-section">
       {% for file in files %}
-      <div class="graph">
-        <h3>{{ file.split('_')[0] }} Peso Over Time</h3>
-        <iframe src="{{ url_for('static', filename='Graphs/' + file) }}" width="100%" height="300px"></iframe>
-      </div>
-      {% endfor %}
-      <!-- Display Images -->
-      {% for image in images %}
-      <div class="graph">
-        <h3>{{ image.split('_')[0] }} Peso Over Time</h3>
-        <img src="{{ url_for('static', filename='Graphs/' + image) }}" alt="{{ image }}" width="100%">
-      
-      </div>
+      {% if file.endswith('.png') %}
+      <img src="{{ url_for('static', filename='Graphs/' + file) }}" alt="{{ file[:-4] }}" class="residue-image">
+      {% endif %}
       {% endfor %}
     </div>
   </div>
 </body>
 </html>
-
