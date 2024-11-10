@@ -1,26 +1,57 @@
-# i want a html pgaee that will disply the images on the screen 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Image Gallery</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graph Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <div class="image-selector">
-            <label for="imageSelect">Choose an image:</label>
-            <select id="imageSelect" onchange="updateImage()">
-                {% for file in files %}
-                    <option value="{{ url_for('static', filename='2014Graphs/' + file) }}">{{ file }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="image-display">
-            <img id="displayedImage" src="{{ url_for('static', filename='2014Graphs/' + files[0]) }}" alt="Selected Image">
-        </div>
+  <!-- Header -->
+  <div class="header">
+    <h1>Waste Management Dashboard</h1>
+    <p>Filter and analyze different types of waste over time</p>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Filter Section -->
+    <div class="filter-section">
+      <h2>Filters</h2>
+      <label for="residue-type">Residue Type</label>
+      <select id="residue-type">
+        <option value="all">All Types</option>
+        {% for type in types %}
+        <option value="{{ type }}">{{ type.capitalize() }}</option>
+        {% endfor %}
+      </select>
+      
+      <label for="start-date">Start Date</label>
+      <input type="date" id="start-date">
+      
+      <label for="end-date">End Date</label>
+      <input type="date" id="end-date">
     </div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <!-- Graph Section -->
+    <div class="graph-section">
+      <!-- Placeholder for Graphs -->
+      {% for file in files %}
+      <div class="graph">
+        <h3>{{ file.split('_')[0] }} Peso Over Time</h3>
+        <iframe src="{{ url_for('static', filename='Graphs/' + file) }}" width="100%" height="300px"></iframe>
+      </div>
+      {% endfor %}
+      <!-- Display Images -->
+      {% for image in images %}
+      <div class="graph">
+        <h3>{{ image.split('_')[0] }} Peso Over Time</h3>
+        <img src="{{ url_for('static', filename='Graphs/' + image) }}" alt="{{ image }}" width="100%">
+      
+      </div>
+      {% endfor %}
+    </div>
+  </div>
 </body>
 </html>
 

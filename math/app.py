@@ -1,5 +1,9 @@
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
+
+# Print the current working directory
+print("Current working directory:", os.getcwd())
 
 # Load the CSV file
 df = pd.read_csv('CSV/data.csv')
@@ -40,10 +44,10 @@ for tipo in unique_tipos:
     tipo_df = df[df['Tipo Resíduo'] == tipo]
     plt.figure()
     plt.plot(tipo_df['Data'], tipo_df['Peso'])
-    plt.title(f'{tipo} Peso Over Time')
+    plt.title(f'{tipo} Peso vs Data')
     plt.xlabel('Data')
     plt.ylabel('Peso')
     plt.tight_layout()
-    plt.savefig(f'{tipo}_peso_over_time.png')
+    plt.savefig(f'{tipo}.png')
 
 print("Plots created successfully.")

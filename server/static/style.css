@@ -1,5 +1,101 @@
+/* Base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f0f8ff;
+  color: #333;
+}
+
 img {
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Header */
+.header {
+  background-color: #87CEFA;
+  padding: 20px;
+  text-align: center;
+  color: white;
+}
+
+.header h1 {
+  font-size: 2rem;
+}
+
+/* Main Content */
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.filter-section {
+  background-color: #e0f7fa;
+  padding: 15px;
+  margin-right: 20px;
+  border-radius: 8px;
+  width: 200px;
+}
+
+.filter-section h2 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.filter-section label {
+  font-size: 1rem;
+  color: #555;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.filter-section select,
+.filter-section input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Graph Section */
+.graph-section {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.graph {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 45%;
+  min-width: 300px;
+}
+
+.graph h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.graph-placeholder {
+  background-color: #e0e0e0;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
 }
