@@ -32,7 +32,7 @@ df['Data'] = pd.to_datetime(df['Data'], format='%Y-%m-%d')
 df['Peso'] = df['Peso'].str.replace(',', '').astype(float)
 
 # Set the font to Arial
-plt.rcParams['font.family'] = 'Arial'
+#plt.rcParams['font.family'] = 'Arial'
 
 # Disable scientific notation
 plt.ticklabel_format(style='plain', useOffset=False, useLocale=False)
@@ -42,12 +42,16 @@ unique_tipos = df['Tipo Resíduo'].unique()
 
 for tipo in unique_tipos:
     tipo_df = df[df['Tipo Resíduo'] == tipo]
+    
+    # Resample the data by month and sum the weights
+    tipo_df = tipo_df.set_index('Data').resample('M').sum().reset_index()
+    
     plt.figure()
     plt.plot(tipo_df['Data'], tipo_df['Peso'])
-    plt.title(f'{tipo} Peso vs Data')
+    plt.title(f'{tipo} Peso vs Data (Monthly)')
     plt.xlabel('Data')
     plt.ylabel('Peso')
     plt.tight_layout()
-    plt.savefig(f'{tipo}.png')
+    plt.savefig(f'{tipo}_monthly.png')
 
 print("Plots created successfully.")
