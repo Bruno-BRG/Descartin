@@ -1,8 +1,8 @@
 /* General styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f8ff; /* Light blue background */
-    color: #333;
+    font-family: 'Roboto', sans-serif;
+    background-color: #1f1f1f; /* Dark background */
+    color: #e0e0e0; /* Light text */
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -12,25 +12,25 @@ body {
 
 .container {
     width: 90%;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #ffffff;
+    background-color: #2b2b2b; /* Darker background for container */
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 /* Header styles */
-h1 {
-    color: #1e90ff; /* Dodger blue */
-    margin-bottom: 20px;
+h1, h2 {
+    color: #4c9ed9; /* Zabbix blue */
 }
 
-h2 {
-    color: #1e90ff; /* Dodger blue */
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
 }
 
 /* Form styles */
@@ -41,38 +41,42 @@ form {
 input[type="text"], input[type="date"], select {
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #ccc;
+    border: 1px solid #555;
     border-radius: 4px;
     width: 100%;
     box-sizing: border-box;
+    background-color: #2b2b2b; /* Dark background for inputs */
+    color: #e0e0e0; /* Light text */
 }
 
 button {
-    background-color: #1e90ff; /* Dodger blue */
+    background-color: #4c9ed9; /* Zabbix blue */
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 button:hover {
-    background-color: #1c86ee; /* Slightly darker blue */
+    background-color: #3a8bb7; /* Slightly darker blue */
 }
 
 /* Dropdown menu styles */
 select {
     appearance: none;
-    background-color: #f0f8ff;
-    border: 1px solid #ccc;
+    background-color: #2b2b2b;
+    border: 1px solid #555;
     padding: 10px;
     border-radius: 4px;
     cursor: pointer;
+    color: #e0e0e0;
 }
 
 select:focus {
     outline: none;
-    border-color: #1e90ff;
+    border-color: #4c9ed9;
 }
 
 /* Table styles */
@@ -80,32 +84,69 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
+    color: #e0e0e0; /* Light text */
 }
 
 th, td {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #555;
     text-align: center;
 }
 
 th {
-    background-color: #1e90ff;
+    background-color: #4c9ed9;
     color: white;
 }
 
 /* Graph container styles */
-#graphsContainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+#graphContainer, #barChartContainer {
     width: 100%;
+    text-align: center;
+    grid-column: span 2;
 }
 
-#graphsContainer img {
+#graphImage, #barChartImage {
     width: 100%;
     height: auto;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+}
+
+/* Card styles */
+.card {
+    background-color: #3b3b3b;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    margin-bottom: 20px;
+    color: #e0e0e0; /* Light text */
+}
+
+.options-card {
+    grid-column: span 1;
+}
+
+.graph-card {
+    grid-column: span 2;
+}
+
+/* Layout styles */
+.mosaic {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 20px;
+    width: 100%;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.column {
+    flex: 1;
+    padding: 10px;
 }
 
 /* Responsive styles */
@@ -116,5 +157,13 @@ th {
 
     h1 {
         font-size: 1.5em;
+    }
+
+    .mosaic {
+        grid-template-columns: 1fr;
+    }
+
+    .row {
+        flex-direction: column;
     }
 }

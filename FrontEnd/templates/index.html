@@ -10,8 +10,40 @@
 <body>
     <div class="container">
         <h1>Residue Management Dashboard</h1>
-        <div id="graphsContainer">
-            <!-- Graphs will be populated dynamically -->
+        <div class="mosaic">
+            <div class="card options-card">
+                <label for="residueTypeSelect">Select Residue Type:</label>
+                <select id="residueTypeSelect" onchange="updateGraph()">
+                    <!-- Options will be populated dynamically -->
+                </select>
+                <label for="timeRangeSelect">Select Time Range:</label>
+                <select id="timeRangeSelect" onchange="updateGraph()">
+                    <option value="all_time">All time</option>
+                    <option value="last_year">Last year</option>
+                    <option value="last_month">Last month</option>
+                </select>
+            </div>
+            <div id="graphContainer" class="card graph-card">
+                <!-- Graph will be displayed here -->
+                <img id="graphImage" src="" alt="Generated Graph" style="display:none;">
+            </div>
+            <div class="card options-card">
+                <label>Select Residue Types:</label>
+                <div id="barResidueTypeCheckboxes">
+                    <!-- Checkboxes will be populated dynamically -->
+                </div>
+                <label for="barTimeRangeSelect">Select Time Range:</label>
+                <select id="barTimeRangeSelect">
+                    <option value="all_time">All time</option>
+                    <option value="last_year">Last year</option>
+                    <option value="last_month">Last month</option>
+                </select>
+                <button onclick="updateBarChart()">Generate Bar Chart</button>
+            </div>
+            <div id="barChartContainer" class="card graph-card">
+                <!-- Bar chart will be displayed here -->
+                <img id="barChartImage" src="{{ url_for('static', filename='default_bar_chart.png') }}" alt="Generated Bar Chart">
+            </div>
         </div>
     </div>
 </body>
