@@ -1,10 +1,12 @@
-from flask import Flask, request, jsonify, render_template, send_file
+from flask import Flask, request, jsonify, send_file, render_template
+from flask_cors import CORS
 import sqlite3
 import pandas as pd
 import subprocess
 import os
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Database connection
 def get_db_connection():
@@ -53,6 +55,15 @@ def residues():
         conn.close()
         return jsonify([dict(row) for row in rows])
 
+@app.route('/residue_types/', methods=['GET'])
+def residue_types():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT DISTINCT residue_type FROM residues')
+    rows = cursor.fetchall()
+    conn.close()
+    return jsonify([row['residue_type'] for row in rows])
+
 @app.route('/residues/<int:residue_id>', methods=['PUT', 'DELETE'])
 def update_delete_residue(residue_id):
     if request.method == 'PUT':
@@ -99,6 +110,7 @@ def generate_graph():
     end_date = data['end_date']
     
     try:
+        app.logger.info(f"Generating graph for residue_type: {residue_type}, start_date: {start_date}, end_date: {end_date}")
         # Call the math.py script
         result = subprocess.run(['python', 'math.py', residue_type, start_date, end_date], capture_output=True, text=True, check=True)
         file_path = result.stdout.strip()
@@ -116,4 +128,4 @@ def generate_graph():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=5001)

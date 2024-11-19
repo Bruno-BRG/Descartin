@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Residue Management</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -28,16 +26,25 @@
 
         <script>
             async function fetchResidueTypes() {
-                const response = await fetch('/residues/');
-                const data = await response.json();
-                const residueTypes = [...new Set(data.map(item => item.residue_type))];
-                const residueTypeSelect = document.getElementById('residueType');
-                residueTypes.forEach(type => {
-                    const option = document.createElement('option');
-                    option.value = type;
-                    option.text = type;
-                    residueTypeSelect.appendChild(option);
-                });
+                try {
+                    console.log('Fetching residue types...'); // Debugging statement
+                    const response = await fetch('http://127.0.0.1:5001/residue_types/');
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    const data = await response.json();
+                    console.log('Fetched residue types:', data); // Debugging statement
+                    const residueTypeSelect = document.getElementById('residueType');
+                    data.forEach(type => {
+                        const option = document.createElement('option');
+                        option.value = type;
+                        option.text = type;
+                        residueTypeSelect.appendChild(option);
+                    });
+                    console.log('Dropdown options added:', residueTypeSelect.options); // Debugging statement
+                } catch (error) {
+                    console.error('Failed to fetch residue types:', error);
+                }
             }
 
             async function generateGraph() {
@@ -45,27 +52,33 @@
                 const startDate = document.getElementById('startDate').value;
                 const endDate = document.getElementById('endDate').value;
 
-                const response = await fetch('/generate_graph', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ residue_type: residueType, start_date: startDate, end_date: endDate })
-                });
+                try {
+                    console.log('Generating graph...'); // Debugging statement
+                    const response = await fetch('http://127.0.0.1:5001/generate_graph', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ residue_type: residueType, start_date: startDate, end_date: endDate })
+                    });
 
-                if (response.ok) {
-                    const blob = await response.blob();
-                    const url = URL.createObjectURL(blob);
-                    const img = document.getElementById('graphImage');
-                    img.src = url;
-                    img.style.display = 'block';
-                } else {
-                    console.error('Failed to generate graph');
+                    if (response.ok) {
+                        const blob = await response.blob();
+                        const url = URL.createObjectURL(blob);
+                        const img = document.getElementById('graphImage');
+                        img.src = url;
+                        img.style.display = 'block';
+                        console.log('Graph generated successfully'); // Debugging statement
+                    } else {
+                        console.error('Failed to generate graph');
+                    }
+                } catch (error) {
+                    console.error('Error generating graph:', error);
                 }
             }
 
             // Populate residue types on page load
-            fetchResidueTypes();
+            document.addEventListener('DOMContentLoaded', fetchResidueTypes);
         </script>
     </div>
 </body>

@@ -3,9 +3,10 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 import sys
+import os
 
 def fetch_graph_data(residue_type, start_date, end_date):
-    url = f'http://127.0.0.1:5000/residues/graph_data/?residue_type={residue_type}&start_date={start_date}&end_date={end_date}'
+    url = f'http://127.0.0.1:5001/residues/graph_data/?residue_type={residue_type}&start_date={start_date}&end_date={end_date}'
     response = requests.get(url)
     response.raise_for_status()  # Raise an exception for HTTP errors
     return response.json()
@@ -27,7 +28,9 @@ def plot_graph(data, residue_type):
     plt.gca().xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m'))
     plt.gcf().autofmt_xdate()  # Rotate date labels
     
-    file_path = f'weight_over_time_{residue_type}.png'
+    # Ensure the images directory exists
+    os.makedirs('images', exist_ok=True)
+    file_path = os.path.join('images', f'weight_over_time_{residue_type}.png')
     plt.savefig(file_path)  # Save the plot as an image file
     return file_path
 
