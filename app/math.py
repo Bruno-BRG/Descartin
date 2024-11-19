@@ -1,6 +1,7 @@
 import requests
 import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
 import sys
 
 def fetch_graph_data(residue_type, start_date, end_date):
@@ -14,7 +15,8 @@ def plot_graph(data, residue_type):
     df['date'] = pd.to_datetime(df['date'])
     
     plt.figure(figsize=(10, 6))
-    plt.plot(df['date'], df['weight'], label=residue_type)
+    sns.lineplot(x='date', y='weight', data=df, label=residue_type)
+    
     plt.title(f'Weight Over Time for {residue_type}')
     plt.xlabel('Date')
     plt.ylabel('Weight')
@@ -30,10 +32,14 @@ def plot_graph(data, residue_type):
     return file_path
 
 if __name__ == "__main__":
-    residue_type = sys.argv[1]
-    start_date = sys.argv[2]
-    end_date = sys.argv[3]
-    
-    data = fetch_graph_data(residue_type, start_date, end_date)
-    file_path = plot_graph(data, residue_type)
-    print(file_path)
+    try:
+        residue_type = sys.argv[1]
+        start_date = sys.argv[2]
+        end_date = sys.argv[3]
+        
+        data = fetch_graph_data(residue_type, start_date, end_date)
+        file_path = plot_graph(data, residue_type)
+        print(file_path)
+    except Exception as e:
+        print(f"Error: {str(e)}", file=sys.stderr)
+        sys.exit(1)

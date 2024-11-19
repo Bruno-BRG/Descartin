@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Database connection
 def get_db_connection():
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect(os.path.join(os.path.dirname(__file__), 'data.db'))
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -109,8 +109,10 @@ def generate_graph():
         
         return send_file(file_path, mimetype='image/png')
     except subprocess.CalledProcessError as e:
+        app.logger.error(f"Error calling math.py: {e.stderr}")
         return jsonify({"error": f"Error calling math.py: {e.stderr}"}), 500
     except Exception as e:
+        app.logger.error(f"Unexpected error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":

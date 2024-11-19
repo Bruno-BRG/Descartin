@@ -3,67 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Residue Data Graph</title>
+    <title>Residue Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
 </head>
 <body>
-    <h1>Residue Data Graph</h1>
-    <label for="residueType">Residue Type:</label>
-    <select id="residueType">
-        <!-- Options will be populated dynamically -->
-    </select>
+    <div class="container">
+        <h1>Residue Management</h1>
+        <label for="residueType">Residue Type:</label>
+        <select id="residueType">
+            <!-- Options will be populated dynamically -->
+        </select>
 
-    <label for="startDate">Start Date:</label>
-    <input type="date" id="startDate">
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate">
 
-    <label for="endDate">End Date:</label>
-    <input type="date" id="endDate">
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate">
 
-    <button onclick="generateGraph()">Generate Graph</button>
+        <button onclick="generateGraph()">Generate Graph</button>
 
-    <img id="graphImage" src="" alt="Generated Graph" style="display:none;">
+        <img id="graphImage" src="" alt="Generated Graph" style="display:none;">
 
-    <script>
-        async function fetchResidueTypes() {
-            const response = await fetch('/residues/');
-            const data = await response.json();
-            const residueTypes = [...new Set(data.map(item => item.residue_type))];
-            const residueTypeSelect = document.getElementById('residueType');
-            residueTypes.forEach(type => {
-                const option = document.createElement('option');
-                option.value = type;
-                option.text = type;
-                residueTypeSelect.appendChild(option);
-            });
-        }
-
-        async function generateGraph() {
-            const residueType = document.getElementById('residueType').value;
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
-
-            const response = await fetch('/generate_graph', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ residue_type: residueType, start_date: startDate, end_date: endDate })
-            });
-
-            if (response.ok) {
-                const blob = await response.blob();
-                const url = URL.createObjectURL(blob);
-                const img = document.getElementById('graphImage');
-                img.src = url;
-                img.style.display = 'block';
-            } else {
-                console.error('Failed to generate graph');
+        <script>
+            async function fetchResidueTypes() {
+                const response = await fetch('/residues/');
+                const data = await response.json();
+                const residueTypes = [...new Set(data.map(item => item.residue_type))];
+                const residueTypeSelect = document.getElementById('residueType');
+                residueTypes.forEach(type => {
+                    const option = document.createElement('option');
+                    option.value = type;
+                    option.text = type;
+                    residueTypeSelect.appendChild(option);
+                });
             }
-        }
 
-        // Populate residue types on page load
-        fetchResidueTypes();
-    </script>
+            async function generateGraph() {
+                const residueType = document.getElementById('residueType').value;
+                const startDate = document.getElementById('startDate').value;
+                const endDate = document.getElementById('endDate').value;
+
+                const response = await fetch('/generate_graph', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ residue_type: residueType, start_date: startDate, end_date: endDate })
+                });
+
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = URL.createObjectURL(blob);
+                    const img = document.getElementById('graphImage');
+                    img.src = url;
+                    img.style.display = 'block';
+                } else {
+                    console.error('Failed to generate graph');
+                }
+            }
+
+            // Populate residue types on page load
+            fetchResidueTypes();
+        </script>
+    </div>
 </body>
 </html>
