@@ -13,7 +13,9 @@ def fetch_graph_data(residue_type, start_date, end_date):
 
 def plot_graph(data, residue_type):
     df = pd.DataFrame(data)
-    df['date'] = pd.to_datetime(df['date'])
+    df['date'] = pd.to_datetime(df['date'], errors='coerce')
+    if df['date'].isnull().any():
+        print(f"Invalid date format in data: {df[df['date'].isnull()]}", file=sys.stderr)
     
     plt.figure(figsize=(10, 6))
     sns.lineplot(x='date', y='weight', data=df, label=residue_type)

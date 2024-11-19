@@ -98,18 +98,32 @@ def get_graph_data():
     '''
     data = pd.read_sql_query(query, conn, params=(residue_type, start_date, end_date))
     conn.close()
-    data['date'] = pd.to_datetime(data['date'])
-    data = data.resample('MS', on='date').sum().reset_index()
+    app.logger.info(f"Fetched data: {data.head()}")  # Debugging statement
+    data['date'] = pd.to_datetime(data['date'], errors='coerce')
+    if data['date'].isnull().any():
+        app.logger.error(f"Invalid date format in data: {data[data['date'].isnull()]}")
+    data.set_index('date', inplace=True)  # Ensure the DataFrame has a DateTimeIndex
+    data = data.resample('MS').sum().reset_index()
     return jsonify(data.to_dict(orient='records'))
 
 @app.route('/api/generate_graph', methods=['POST'])
 def generate_graph():
     data = request.get_json()
     residue_type = data['residue_type']
-    start_date = data['start_date']
-    end_date = data['end_date']
     
     try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT MIN(date) as start_date, MAX(date) as end_date FROM residues WHERE residue_type = ?', (residue_type,))
+        date_range = cursor.fetchone()
+        conn.close()
+        
+        if not date_range['start_date'] or not date_range['end_date']:
+            raise ValueError("No data available for the specified residue type")
+        
+        start_date = date_range['start_date']
+        end_date = date_range['end_date']
+        
         app.logger.info(f"Generating graph for residue_type: {residue_type}, start_date: {start_date}, end_date: {end_date}")
         
         # Clear the images folder

@@ -1,4 +1,3 @@
-
 async function fetchResidueTypes() {
     try {
         console.log('Fetching residue types...'); // Debugging statement
@@ -50,5 +49,46 @@ async function generateGraph() {
     }
 }
 
+async function fetchAndDisplayGraphs() {
+    try {
+        const response = await fetch('http://127.0.0.1:5001/api/residue_types/');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const residueTypes = await response.json();
+        const graphsContainer = document.getElementById('graphsContainer');
+        graphsContainer.innerHTML = ''; // Clear any existing content
+
+        for (const type of residueTypes) {
+            const graphResponse = await fetch('http://127.0.0.1:5001/api/generate_graph', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ residue_type: type, start_date: '2020-01-01', end_date: '2023-12-31' })
+            });
+
+            if (graphResponse.ok) {
+                const data = await graphResponse.json();
+                const img = document.createElement('img');
+                img.src = `http://127.0.0.1:5001/api/images/${data.filename}?t=${new Date().getTime()}`;
+                img.alt = `Graph for ${type}`;
+                img.onerror = () => {
+                    img.style.display = 'none';
+                    console.error(`Image not found for ${type}`);
+                };
+                graphsContainer.appendChild(img);
+            } else {
+                console.error(`Failed to generate graph for ${type}`);
+            }
+        }
+    } catch (error) {
+        console.error('Error fetching and displaying graphs:', error);
+    }
+}
+
 // Populate residue types on page load
 document.addEventListener('DOMContentLoaded', fetchResidueTypes);
+
+// Populate graphs on page load
+document.addEventListener('DOMContentLoaded', fetchAndDisplayGraphs);
