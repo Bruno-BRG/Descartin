@@ -6,7 +6,7 @@ import sys
 import os
 
 def fetch_graph_data(residue_type, start_date, end_date):
-    url = f'http://127.0.0.1:5001/residues/graph_data/?residue_type={residue_type}&start_date={start_date}&end_date={end_date}'
+    url = f'http://127.0.0.1:5001/api/residues/graph_data/?residue_type={residue_type}&start_date={start_date}&end_date={end_date}'
     response = requests.get(url)
     response.raise_for_status()  # Raise an exception for HTTP errors
     return response.json()

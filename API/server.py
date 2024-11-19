@@ -35,7 +35,7 @@ create_table()
 def index():
     return render_template('index.html')
 
-@app.route('/residues/', methods=['GET', 'POST'])
+@app.route('/api/residues/', methods=['GET', 'POST'])
 def residues():
     if request.method == 'POST':
         data = request.get_json()
@@ -55,7 +55,7 @@ def residues():
         conn.close()
         return jsonify([dict(row) for row in rows])
 
-@app.route('/residue_types/', methods=['GET'])
+@app.route('/api/residue_types/', methods=['GET'])
 def residue_types():
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -64,7 +64,7 @@ def residue_types():
     conn.close()
     return jsonify([row['residue_type'] for row in rows])
 
-@app.route('/residues/<int:residue_id>', methods=['PUT', 'DELETE'])
+@app.route('/api/residues/<int:residue_id>', methods=['PUT', 'DELETE'])
 def update_delete_residue(residue_id):
     if request.method == 'PUT':
         data = request.get_json()
@@ -86,7 +86,7 @@ def update_delete_residue(residue_id):
         conn.close()
         return jsonify({"message": "Residue deleted successfully"})
 
-@app.route('/residues/graph_data/')
+@app.route('/api/residues/graph_data/')
 def get_graph_data():
     residue_type = request.args.get('residue_type')
     start_date = request.args.get('start_date')
@@ -102,7 +102,7 @@ def get_graph_data():
     data = data.resample('MS', on='date').sum().reset_index()
     return jsonify(data.to_dict(orient='records'))
 
-@app.route('/generate_graph', methods=['POST'])
+@app.route('/api/generate_graph', methods=['POST'])
 def generate_graph():
     data = request.get_json()
     residue_type = data['residue_type']
@@ -111,21 +111,36 @@ def generate_graph():
     
     try:
         app.logger.info(f"Generating graph for residue_type: {residue_type}, start_date: {start_date}, end_date: {end_date}")
+        
+        # Clear the images folder
+        images_folder = os.path.join(os.path.dirname(__file__), 'images')
+        if os.path.exists(images_folder):
+            for filename in os.listdir(images_folder):
+                file_path = os.path.join(images_folder, filename)
+                if os.path.isfile(file_path):
+                    os.unlink(file_path)
+        
         # Call the math.py script
-        result = subprocess.run(['python', 'math.py', residue_type, start_date, end_date], capture_output=True, text=True, check=True)
+        script_path = os.path.join(os.path.dirname(__file__), 'math.py')
+        result = subprocess.run(['python', script_path, residue_type, start_date, end_date], capture_output=True, text=True, check=True)
         file_path = result.stdout.strip()
         
         # Check if the file path is valid
         if not file_path or not os.path.exists(file_path):
             raise FileNotFoundError(f"Generated file not found: {file_path}")
         
-        return send_file(file_path, mimetype='image/png')
+        filename = os.path.basename(file_path)
+        return jsonify({"filename": filename})
     except subprocess.CalledProcessError as e:
         app.logger.error(f"Error calling math.py: {e.stderr}")
         return jsonify({"error": f"Error calling math.py: {e.stderr}"}), 500
     except Exception as e:
         app.logger.error(f"Unexpected error: {str(e)}")
         return jsonify({"error": str(e)}), 500
+
+@app.route('/api/images/<filename>')
+def get_image(filename):
+    return send_file(os.path.join('images', filename), mimetype='image/png')
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

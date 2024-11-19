@@ -28,7 +28,7 @@
             async function fetchResidueTypes() {
                 try {
                     console.log('Fetching residue types...'); // Debugging statement
-                    const response = await fetch('http://127.0.0.1:5001/residue_types/');
+                    const response = await fetch('http://127.0.0.1:5001/api/residue_types/');
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
@@ -54,7 +54,7 @@
 
                 try {
                     console.log('Generating graph...'); // Debugging statement
-                    const response = await fetch('http://127.0.0.1:5001/generate_graph', {
+                    const response = await fetch('http://127.0.0.1:5001/api/generate_graph', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -63,10 +63,9 @@
                     });
 
                     if (response.ok) {
-                        const blob = await response.blob();
-                        const url = URL.createObjectURL(blob);
+                        const data = await response.json();
                         const img = document.getElementById('graphImage');
-                        img.src = url;
+                        img.src = `http://127.0.0.1:5001/api/images/${data.filename}?t=${new Date().getTime()}`;
                         img.style.display = 'block';
                         console.log('Graph generated successfully'); // Debugging statement
                     } else {
