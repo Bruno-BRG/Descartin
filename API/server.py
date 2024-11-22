@@ -3,10 +3,6 @@ import crud
 
 app = Flask(__name__)
 
-@app.before_request
-def initialize():
-    crud.create_table()
-
 @app.route('/weight/<int:index>', methods=['GET'])
 def get_weight(index):
     result = crud.get_weight(index)
@@ -16,8 +12,7 @@ def get_weight(index):
 def add_weight():
     weight = request.json.get('weight')
     residue_type = request.json.get('residue_type')
-    date = request.json.get('date')
-    result = crud.add_weight(weight, residue_type, date)
+    result = crud.add_weight(weight, residue_type)
     return jsonify(result)
 
 @app.route('/weight/<int:index>', methods=['PUT'])

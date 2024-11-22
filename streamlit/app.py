@@ -8,17 +8,16 @@ from sklearn.linear_model import LinearRegression
 API_URL = "http://localhost:5000"
 
 def fetch_data():
-    try:
-        response = requests.get(f"{API_URL}/weight")
-        response.raise_for_status()  # Raise an error for bad status codes
+    response = requests.get(f"{API_URL}/weight")
+    if response.status_code == 200:
         data = response.json()
         if data:
             return data
         else:
             st.error("No data received from API")
             return []
-    except requests.exceptions.RequestException as e:
-        st.error(f"Failed to fetch data from API: {e}")
+    else:
+        st.error("Failed to fetch data from API")
         return []
 
 def main():
@@ -72,8 +71,8 @@ def main():
                 fig, ax = plt.subplots()
                 fig.patch.set_facecolor('black')
                 ax.set_facecolor('black')
-                ax.plot(monthly_weight['date'], monthly_weight['weight'], label='Peso Mensal', color='#1f77b4')
-                ax.plot(monthly_weight['date'], monthly_weight['trend'], label='Tendencia', linestyle='--', color='#ff7f0e')
+                ax.plot(monthly_weight['date'], monthly_weight['weight'], label='Monthly Weight', color='#1f77b4')
+                ax.plot(monthly_weight['date'], monthly_weight['trend'], label='Trend', linestyle='--', color='#ff7f0e')
                 ax.legend(facecolor='black', framealpha=1, edgecolor='white', labelcolor='white')
                 ax.xaxis.label.set_color('white')
                 ax.yaxis.label.set_color('white')
