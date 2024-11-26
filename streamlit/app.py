@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.linear_model import LinearRegression
 
-API_URL = "http://localhost:8000"
+API_URL = "http://api:8000"  # Use the service name 'api' instead of 'localhost'
 
 def check_password():
     """Returns `True` if the user had the correct password."""
