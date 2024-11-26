@@ -12,7 +12,8 @@ def get_weight(index):
 def add_weight():
     weight = request.json.get('weight')
     residue_type = request.json.get('residue_type')
-    result = crud.add_weight(weight, residue_type)
+    date = request.json.get('date')
+    result = crud.add_weight(weight, residue_type, date)
     return jsonify(result)
 
 @app.route('/weight/<int:index>', methods=['PUT'])
