@@ -1,36 +1,41 @@
-from flask import Flask, request, jsonify
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 import crud
 
-app = Flask(__name__)
+app = FastAPI()
 
-@app.route('/weight/<int:index>', methods=['GET'])
-def get_weight(index):
+class Weight(BaseModel):
+    weight: str
+    residue_type: str
+    date: str
+
+@app.get("/weight/{index}")
+def get_weight(index: int):
     result = crud.get_weight(index)
-    return jsonify(result)
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
+    return result
 
-@app.route('/weight', methods=['POST'])
-def add_weight():
-    weight = request.json.get('weight')
-    residue_type = request.json.get('residue_type')
-    date = request.json.get('date')
-    result = crud.add_weight(weight, residue_type, date)
-    return jsonify(result)
+@app.post("/weight")
+def add_weight(weight: Weight):
+    result = crud.add_weight(weight.weight, weight.residue_type, weight.date)
+    return result
 
-@app.route('/weight/<int:index>', methods=['PUT'])
-def update_weight(index):
-    weight = request.json.get('weight')
+@app.put("/weight/{index}")
+def update_weight(index: int, weight: str):
     result = crud.update_weight(index, weight)
-    return jsonify(result)
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
+    return result
 
-@app.route('/weight/<int:index>', methods=['DELETE'])
-def delete_weight(index):
+@app.delete("/weight/{index}")
+def delete_weight(index: int):
     result = crud.delete_weight(index)
-    return jsonify(result)
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
+    return result
 
-@app.route('/weight', methods=['GET'])
+@app.get("/weight")
 def get_all_weights():
     data = crud.load_data()
-    return jsonify(data)
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    return data
