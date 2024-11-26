@@ -1,65 +1,76 @@
-# Residue Management Application
+# Descartin Dashboard
 
-This application is designed to manage and visualize residue data. It consists of a backend API and a frontend client. The backend handles database operations and generates graphs, while the frontend provides a user interface for interacting with the data.
+This project is a dashboard for visualizing weight data using Streamlit and FastAPI. The data is stored in a JSON file and can be accessed and manipulated through the FastAPI endpoints.
 
 ## Table of Contents
 
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Setup and Installation](#setup-and-installation)
+- [Installation](#installation)
+- [Configuration](#configuration)
 - [Running the Application](#running-the-application)
-- [Project Structure](#project-structure)
-- [Endpoints](#endpoints)
-- [License](#license)
+- [API Endpoints](#api-endpoints)
+- [Usage](#usage)
 
-## Features
+## Installation
 
-- Add, update, and delete residue data.
-- Generate graphs based on residue data.
-- View residue data in a user-friendly interface.
-- Automatically clear old images when the frontend is opened.
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/yourusername/descartin-dashboard.git
+    cd descartin-dashboard
+    ```
 
-## Technologies Used
+2. Create a virtual environment and activate it:
+    ```sh
+    python -m venv venv
+    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    ```
 
-- Python
-- Flask
-- SQLite
-- Pandas
-- Matplotlib
-- Seaborn
-- HTML/CSS
-- JavaScript
+3. Install the required dependencies:
+    ```sh
+    pip install -r requirements.txt
+    ```
 
-## Setup and Installation
+## Configuration
 
-1. **Clone the repository:**
+1. Create a `.streamlit` directory in the `streamlit` folder:
+    ```sh
+    mkdir -p streamlit/.streamlit
+    ```
 
-## Project Structure
+2. Create a `secrets.toml` file in the `.streamlit` directory with the following content:
+    ```toml
+    # filepath: /home/bubu/Documents/Descartin/streamlit/.streamlit/secrets.toml
+    password = "your_password_here"
+    ```
 
-- **static/style.css**: Contains the CSS styles for the frontend.
-- **templates/index.html**: Contains the HTML template for the frontend.
-- **images/**: Directory where generated images are stored.
-- **server.py**: Backend server handling API requests and database operations.
-- **client.py**: Frontend client serving the HTML and clearing the images folder.
-- **math.py**: Script for generating graphs based on residue data.
-- **check_residue_types.py**: Script for checking residue types in the database.
-- **data.db**: SQLite database file.
+    Replace `"your_password_here"` with your actual password.
 
-## Endpoints
+## Running the Application
 
-### Backend API
+1. Start the FastAPI server:
+    ```sh
+    uvicorn server:app --reload
+    ```
 
-- **GET /residues/**: Retrieve all residues.
-- **POST /residues/**: Add a new residue.
-- **PUT /residues/<int:residue_id>**: Update a residue.
-- **DELETE /residues/<int:residue_id>**: Delete a residue.
-- **GET /residue_types/**: Retrieve distinct residue types.
-- **GET /residues/graph_data/**: Retrieve graph data for a specific residue type and date range.
-- **POST /generate_graph**: Generate a graph for a specific residue type and date range.
+2. In a new terminal, start the Streamlit app:
+    ```sh
+    streamlit run streamlit/app.py
+    ```
 
-### Frontend
+## API Endpoints
 
-- **GET /**: Serve the frontend HTML.
+The following endpoints are available in the FastAPI server:
+
+- `GET /weight/{index}`: Get weight data by index.
+- `POST /weight`: Add new weight data.
+- `PUT /weight/{index}`: Update weight data by index.
+- `DELETE /weight/{index}`: Delete weight data by index.
+- `GET /weight`: Get all weight data.
+
+## Usage
+
+1. Open your web browser and go to `http://localhost:8501` to access the Streamlit dashboard.
+2. Enter the password to log in.
+3. Use the dashboard to visualize weight data by type of residue, by month, and with a linear trend.
 
 ## License
 
