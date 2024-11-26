@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 
-JSON_FILEPATH = '/home/bubu/Documents/Descartin/API/data.json'
+JSON_FILEPATH = 'data.json'
 
 def load_data():
     with open(JSON_FILEPATH, 'r') as file:
