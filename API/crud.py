@@ -23,10 +23,12 @@ def add_weight(weight, residue_type, date):
         json.dump(data, file)
     return {"message": "Weight added successfully"}
 
-def update_weight(index, weight):
+def update_weight(index, weight, residue_type, date):
     data = load_data()
     if 0 <= index < len(data):
         data[index]['weight'] = weight
+        data[index]['residue_type'] = residue_type
+        data[index]['date'] = parse_date(date)
         with open(JSON_FILEPATH, 'w') as file:
             json.dump(data, file)
         return {"message": "Weight updated successfully"}

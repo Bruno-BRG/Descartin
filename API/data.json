@@ -1,13 +1,593 @@
 [   
     {
-        "date": "2024-11-07",
-        "residue_type": "Eletronicos e mobilias",
-        "weight": "32640,00"
+        "date": "2024-11-24",
+        "residue_type": "Não identificado",
+        "weight": "227180,00"
     },
     {
-        "date": "2024-11-07",
+        "date": "2024-11-24",
+        "residue_type": "Eletronicos e mobilias",
+        "weight": "160,00"
+    },
+    {
+        "date": "2024-11-24",
+        "residue_type": "Papel",
+        "weight": "4320,00"
+    },
+    {
+        "date": "2024-11-23",
+        "residue_type": "Vidro",
+        "weight": "17960,00"
+    },
+    {
+        "date": "2024-11-23",
+        "residue_type": "Eletronicos e mobilias",
+        "weight": "20200,00"
+    },
+    {
+        "date": "2024-11-23",
+        "residue_type": "Restos Comida",
+        "weight": "8800,00"
+    },
+    {
+        "date": "2024-11-23",
+        "residue_type": "Residuos de vegetação",
+        "weight": "94440,00"
+    },
+    {
+        "date": "2024-11-23",
+        "residue_type": "Papel",
+        "weight": "12180,00"
+    },
+    {
+        "date": "2024-11-23",
         "residue_type": "Plastico",
+        "weight": "8320,00"
+    },
+    {
+        "date": "2024-11-23",
+        "residue_type": "Residuos Limpeza",
+        "weight": "13980,00"
+    },
+    {
+        "date": "2024-11-23",
+        "residue_type": "Não identificado",
+        "weight": "249640,00"
+    },
+    {
+        "date": "2024-11-22",
+        "residue_type": "Restos Comida",
+        "weight": "7480,00"
+    },
+    {
+        "date": "2024-11-22",
+        "residue_type": "Plastico",
+        "weight": "19040,00"
+    },
+    {
+        "date": "2024-11-22",
+        "residue_type": "Eletronicos e mobilias",
+        "weight": "19040,00"
+    },
+    {
+        "date": "2024-11-22",
+        "residue_type": "Residuos de vegetação",
+        "weight": "95080,00"
+    },
+    {
+        "date": "2024-11-22",
+        "residue_type": "Papel",
+        "weight": "5720,00"
+    },
+    {
+        "date": "2024-11-22",
+        "residue_type": "Não identificado",
+        "weight": "218760,00"
+    },
+    {
+        "date": "2024-11-22",
+        "residue_type": "Residuos Limpeza",
+        "weight": "15720,00"
+    },
+    {
+        "date": "2024-11-21",
+        "residue_type": "Não identificado",
+        "weight": "235060,00"
+    },
+    {
+        "date": "2024-11-21",
+        "residue_type": "Residuos Limpeza",
+        "weight": "18240,00"
+    },
+    {
+        "date": "2024-11-21",
+        "residue_type": "Vidro",
+        "weight": "6840,00"
+    },
+    {
+        "date": "2024-11-21",
+        "residue_type": "Eletronicos e mobilias",
+        "weight": "20280,00"
+    },
+    {
+        "date": "2024-11-21",
+        "residue_type": "Papel",
+        "weight": "31740,00"
+    },
+    {
+        "date": "2024-11-21",
+        "residue_type": "Residuos de vegetação",
+        "weight": "114600,00"
+    },
+    {
+        "date": "2024-11-21",
+        "residue_type": "Plastico",
+        "weight": "4860,00"
+    },
+    {
+        "date": "2024-11-21",
+        "residue_type": "Restos Comida",
         "weight": "6920,00"
+    },
+    {
+        "date": "2024-11-20",
+        "residue_type": "Residuos de vegetação",
+        "weight": "103260,00"
+    },
+    {
+        "date": "2024-11-20",
+        "residue_type": "Vidro",
+        "weight": "20980,00"
+    },
+    {
+        "date": "2024-11-20",
+        "residue_type": "Não identificado",
+        "weight": "227440,00"
+    },
+    {
+        "date": "2024-11-20",
+        "residue_type": "Eletronicos e mobilias",
+        "weight": "25300,00"
+    },
+    {
+        "date": "2024-11-20",
+        "residue_type": "Plastico",
+        "weight": "9760,00"
+    },
+    {
+        "date": "2024-11-20",
+        "residue_type": "Papel",
+        "weight": "15300,00"
+    },
+    {
+        "date": "2024-11-20",
+        "residue_type": "Restos Comida",
+        "weight": "7820,00"
+    },
+    {
+        "date": "2024-11-20",
+        "residue_type": "Residuos Limpeza",
+        "weight": "25860,00"
+    },
+    {
+        "date": "2024-11-19",
+        "residue_type": "Residuos de vegetação",
+        "weight": "109440,00"
+    },
+    {
+        "date": "2024-11-19",
+        "residue_type": "Papel",
+        "weight": "8360,00"
+    },
+    {
+        "date": "2024-11-19",
+        "residue_type": "Não identificado",
+        "weight": "261160,00"
+    },
+    {
+        "date": "2024-11-19",
+        "residue_type": "Plastico",
+        "weight": "34120,00"
+    },
+    {
+        "date": "2024-11-19",
+        "residue_type": "Restos Comida",
+        "weight": "8800,00"
+    },
+    {
+        "date": "2024-11-19",
+        "residue_type": "Residuos Limpeza",
+        "weight": "25400,00"
+    },
+    {
+        "date": "2024-11-19",
+        "residue_type": "Eletronicos e mobilias",
+        "weight": "15600,00"
+    },
+    {
+        "date": "2024-11-18",
+        "residue_type": "Não identificado",
+        "weight": "232880,00"
+    },
+    {
+        "date": "2024-11-18",
+        "residue_type": "Papel",
+        "weight": "40760,00"
+    },
+    {
+        "date": "2024-11-18",
+        "residue_type": "Residuos de vegetação",
+        "weight": "99780,00"
+    },
+    {
+        "date": "2024-11-18",
+        "residue_type": "Vidro",
+        "weight": "2660,00"
+    },
+    {
+        "date": "2024-11-18",
+        "residue_type": "Residuos Limpeza",
+        "weight": "4400,00"
+    },
+    {
+        "date": "2024-11-18",
+        "residue_type": "Restos Comida",
+        "weight": "12700,00"
+    },
+    {
+        "date": "2024-11-18",
+        "residue_type": "Eletronicos e mobilias",
+        "weight": "31420,00"
+    },
+    {
+        "date": "2024-11-18",
+        "residue_type": "Plastico",
+        "weight": "7960,00"
+    },
+    {
+        "date": "2024-11-17",
+        "residue_type": "Eletronicos e mobilias",
+        "weight": "160,00"
+    },
+    {
+        "date": "2024-11-17",
+        "residue_type": "Não identificado",
+        "weight": "215760,00"
+    },
+    {
+        "date": "2024-11-17",
+        "residue_type": "Residuos Limpeza",
+        "weight": "160,00"
+    },
+    {
+        "date": "2024-11-17",
+        "residue_type": "Papel",
+        "weight": "4560,00"
+    },
+    {
+        "date": "2024-11-16",
+        "residue_type": "Não identificado",
+        "weight": "232280,00"
+    },
+    {
+        "date": "2024-11-16",
+        "residue_type": "Papel",
+        "weight": "9000,00"
+    },
+    {
+        "date": "2024-11-16",
+        "residue_type": "Residuos de vegetação",
+        "weight": "100660,00"
+    },
+    {
+        "date": "2024-11-16",
+        "residue_type": "Eletronicos e mobilias",
+        "weight": "13340,00"
+    },
+    {
+        "date": "2024-11-16",
+        "residue_type": "Plastico",
+        "weight": "6080,00"
+    },
+    {
+        "date": "2024-11-16",
+        "residue_type": "Restos Comida",
+        "weight": "7700,00"
+    },
+    {
+        "date": "2024-11-16",
+        "residue_type": "Vidro",
+        "weight": "19360,00"
+    },
+    {
+        "date": "2024-11-16",
+        "residue_type": "Residuos Limpeza",
+        "weight": "16620,00"
+    },
+    {
+        "date": "2024-11-15",
+        "residue_type": "Eletronicos e mobilias",
+        "weight": "21000,00"
+    },
+    {
+        "date": "2024-11-15",
+        "residue_type": "Papel",
+        "weight": "7040,00"
+    },
+    {
+        "date": "2024-11-15",
+        "residue_type": "Residuos de vegetação",
+        "weight": "84900,00"
+    },
+    {
+        "date": "2024-11-15",
+        "residue_type": "Restos Comida",
+        "weight": "7920,00"
+    },
+    {
+        "date": "2024-11-15",
+        "residue_type": "Plastico",
+        "weight": "20280,00"
+    },
+    {
+        "date": "2024-11-15",
+        "residue_type": "Não identificado",
+        "weight": "221680,00"
+    },
+    {
+        "date": "2024-11-15",
+        "residue_type": "Vidro",
+        "weight": "8900,00"
+    },
+    {
+        "date": "2024-11-15",
+        "residue_type": "Residuos Limpeza",
+        "weight": "23380,00"
+    },
+    {
+        "date": "2024-11-14",
+        "residue_type": "Restos Comida",
+        "weight": "8560,00"
+    },
+    {
+        "date": "2024-11-14",
+        "residue_type": "Eletronicos e mobilias",
+        "weight": "27700,00"
+    },
+    {
+        "date": "2024-11-14",
+        "residue_type": "Residuos Limpeza",
+        "weight": "22760,00"
+    },
+    {
+        "date": "2024-11-14",
+        "residue_type": "Plastico",
+        "weight": "4560,00"
+    },
+    {
+        "date": "2024-11-14",
+        "residue_type": "Papel",
+        "weight": "30340,00"
+    },
+    {
+        "date": "2024-11-14",
+        "residue_type": "Residuos de vegetação",
+        "weight": "71480,00"
+    },
+    {
+        "date": "2024-11-14",
+        "residue_type": "Vidro",
+        "weight": "7740,00"
+    },
+    {
+        "date": "2024-11-14",
+        "residue_type": "Não identificado",
+        "weight": "225320,00"
+    },
+    {
+        "date": "2024-11-13",
+        "residue_type": "Restos Comida",
+        "weight": "7460,00"
+    },
+    {
+        "date": "2024-11-13",
+        "residue_type": "Eletronicos e mobilias",
+        "weight": "21600,00"
+    },
+    {
+        "date": "2024-11-13",
+        "residue_type": "Vidro",
+        "weight": "16380,00"
+    },
+    {
+        "date": "2024-11-13",
+        "residue_type": "Residuos Limpeza",
+        "weight": "17900,00"
+    },
+    {
+        "date": "2024-11-13",
+        "residue_type": "Plastico",
+        "weight": "14500,00"
+    },
+    {
+        "date": "2024-11-13",
+        "residue_type": "Não identificado",
+        "weight": "268820,00"
+    },
+    {
+        "date": "2024-11-13",
+        "residue_type": "Residuos de vegetação",
+        "weight": "93840,00"
+    },
+    {
+        "date": "2024-11-13",
+        "residue_type": "Papel",
+        "weight": "14460,00"
+    },
+    {
+        "date": "2024-11-12",
+        "residue_type": "Plastico",
+        "weight": "31320,00"
+    },
+    {
+        "date": "2024-11-12",
+        "residue_type": "Restos Comida",
+        "weight": "8460,00"
+    },
+    {
+        "date": "2024-11-12",
+        "residue_type": "Residuos Limpeza",
+        "weight": "16520,00"
+    },
+    {
+        "date": "2024-11-12",
+        "residue_type": "Não identificado",
+        "weight": "238680,00"
+    },
+    {
+        "date": "2024-11-12",
+        "residue_type": "Papel",
+        "weight": "8340,00"
+    },
+    {
+        "date": "2024-11-12",
+        "residue_type": "Residuos de vegetação",
+        "weight": "99940,00"
+    },
+    {
+        "date": "2024-11-12",
+        "residue_type": "Vidro",
+        "weight": "18920,00"
+    },
+    {
+        "date": "2024-11-12",
+        "residue_type": "Eletronicos e mobilias",
+        "weight": "21040,00"
+    },
+    {
+        "date": "2024-11-11",
+        "residue_type": "Não identificado",
+        "weight": "226380,00"
+    },
+    {
+        "date": "2024-11-11",
+        "residue_type": "Restos Comida",
+        "weight": "18280,00"
+    },
+    {
+        "date": "2024-11-11",
+        "residue_type": "Papel",
+        "weight": "38620,00"
+    },
+    {
+        "date": "2024-11-11",
+        "residue_type": "Plastico",
+        "weight": "3040,00"
+    },
+    {
+        "date": "2024-11-11",
+        "residue_type": "Residuos Limpeza",
+        "weight": "40380,00"
+    },
+    {
+        "date": "2024-11-11",
+        "residue_type": "Residuos de vegetação",
+        "weight": "96320,00"
+    },
+    {
+        "date": "2024-11-11",
+        "residue_type": "Eletronicos e mobilias",
+        "weight": "18600,00"
+    },
+    {
+        "date": "2024-11-10",
+        "residue_type": "Não identificado",
+        "weight": "251060,00"
+    },
+    {
+        "date": "2024-11-10",
+        "residue_type": "Residuos Limpeza",
+        "weight": "960,00"
+    },
+    {
+        "date": "2024-11-10",
+        "residue_type": "Papel",
+        "weight": "5400,00"
+    },
+    {
+        "date": "2024-11-10",
+        "residue_type": "Eletronicos e mobilias",
+        "weight": "400,00"
+    },
+    {
+        "date": "2024-11-09",
+        "residue_type": "Vidro",
+        "weight": "9100,00"
+    },
+    {
+        "date": "2024-11-09",
+        "residue_type": "Residuos Limpeza",
+        "weight": "46720,00"
+    },
+    {
+        "date": "2024-11-09",
+        "residue_type": "Papel",
+        "weight": "12860,00"
+    },
+    {
+        "date": "2024-11-09",
+        "residue_type": "Residuos de vegetação",
+        "weight": "102020,00"
+    },
+    {
+        "date": "2024-11-09",
+        "residue_type": "Eletronicos e mobilias",
+        "weight": "43760,00"
+    },
+    {
+        "date": "2024-11-09",
+        "residue_type": "Restos Comida",
+        "weight": "10140,00"
+    },
+    {
+        "date": "2024-11-09",
+        "residue_type": "Plastico",
+        "weight": "6700,00"
+    },
+    {
+        "date": "2024-11-09",
+        "residue_type": "Não identificado",
+        "weight": "254420,00"
+    },
+    {
+        "date": "2024-11-08",
+        "residue_type": "Vidro",
+        "weight": "4020,00"
+    },
+    {
+        "date": "2024-11-08",
+        "residue_type": "Não identificado",
+        "weight": "217680,00"
+    },
+    {
+        "date": "2024-11-08",
+        "residue_type": "Eletronicos e mobilias",
+        "weight": "24300,00"
+    },
+    {
+        "date": "2024-11-08",
+        "residue_type": "Restos Comida",
+        "weight": "9360,00"
+    },
+    {
+        "date": "2024-11-08",
+        "residue_type": "Papel",
+        "weight": "5660,00"
+    },
+    {
+        "date": "2024-11-08",
+        "residue_type": "Plastico",
+        "weight": "21740,00"
     },
     {
         "date": "2024-11-07",

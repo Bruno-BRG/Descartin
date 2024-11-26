@@ -58,6 +58,37 @@ def parse_date(date_str):
 def main():
     st.set_page_config(layout="wide")
     st.title("Dashboard Descartin")
+    st.markdown("Data provided by [Cascais Data](https://data.cascais.pt/)")
+
+    # Custom CSS to match Zabbix color scheme
+    st.markdown("""
+        <style>
+        .main {
+            background-color: #2C3E50;
+            color: #ECF0F1;
+        }
+        .stButton>button {
+            background-color: #3498DB;
+            color: #ECF0F1;
+        }
+        .stTextInput>div>div>input {
+            background-color: #34495E;
+            color: #ECF0F1;
+        }
+        .stSelectbox>div>div>div>div {
+            background-color: #34495E;
+            color: #ECF0F1;
+        }
+        .stDataFrame>div>div>div>div>div {
+            background-color: #34495E;
+            color: #ECF0F1;
+        }
+        .stExpander>div>div>div {
+            background-color: #34495E;
+            color: #ECF0F1;
+        }
+        </style>
+        """, unsafe_allow_html=True)
 
     data = fetch_data()
     if data:
@@ -104,11 +135,11 @@ def main():
 
                 # Plot the line chart with trend line
                 fig, ax = plt.subplots()
-                fig.patch.set_facecolor('black')
-                ax.set_facecolor('black')
-                ax.plot(monthly_weight['date'], monthly_weight['weight'], label='Peso Mensal', color='#1f77b4')
-                ax.plot(monthly_weight['date'], monthly_weight['trend'], label='Tendencia', linestyle='--', color='#ff7f0e')
-                ax.legend(facecolor='black', framealpha=1, edgecolor='white', labelcolor='white')
+                fig.patch.set_facecolor('#2C3E50')
+                ax.set_facecolor('#2C3E50')
+                ax.plot(monthly_weight['date'], monthly_weight['weight'], label='Peso Mensal', color='#3498DB')
+                ax.plot(monthly_weight['date'], monthly_weight['trend'], label='Tendencia', linestyle='--', color='#E74C3C')
+                ax.legend(facecolor='#2C3E50', framealpha=1, edgecolor='white', labelcolor='white')
                 ax.xaxis.label.set_color('white')
                 ax.yaxis.label.set_color('white')
                 ax.tick_params(axis='x', colors='white')
