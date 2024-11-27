@@ -1,9 +1,9 @@
-FROM python:3.9-slim
+FROM python:3.12.3-slim
 
 WORKDIR /app
 
 COPY requirements.txt requirements.txt
-RUN pip install --upgrade pip && pip install protobuf==3.20.* && pip install -r requirements.txt
+RUN pip install --upgrade pip && pip install setuptools wheel && pip install protobuf==3.20.* && pip install -r requirements.txt
 
 COPY . .
 
