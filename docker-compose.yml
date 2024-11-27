@@ -1,24 +1,18 @@
 version: '3.8'
 
 services:
-  api:
-    build:
-      context: ./API
-      dockerfile: Dockerfile
-    volumes:
-      - ./API:/app
-    ports:
-      - "8000:8000"
-    environment:
-      - JSON_FILEPATH=/app/data.json
-
   streamlit:
     build:
       context: ./streamlit
-      dockerfile: Dockerfile
-    volumes:
-      - ./streamlit:/app
     ports:
       - "8501:8501"
-    environment:
-      - API_URL=http://api:8000
+    depends_on:
+      - api
+
+  api:
+    build:
+      context: ./API
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./API/data.json:/app/data.json
