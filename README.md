@@ -46,6 +46,17 @@ This project is a dashboard for visualizing weight data using Streamlit and Fast
 
 ## Running the Application
 
+### Using Docker Compose
+
+1. Build and start the containers:
+    ```sh
+    docker-compose up --build
+    ```
+
+2. Open your web browser and go to `http://localhost:8501` to access the Streamlit dashboard.
+
+### Manually
+
 1. Start the FastAPI server:
     ```sh
     uvicorn server:app --reload
