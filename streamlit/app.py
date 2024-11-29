@@ -14,8 +14,8 @@ def check_password():
     def login_form():
         """Form with widgets to collect user information"""
         with st.form("Credentials"):
-            st.text_input("Username", key="username")
-            st.text_input("Password", type="password", key="password")
+            st.text_input("Usuario", key="username")
+            st.text_input("Senha", type="password", key="password")
             st.form_submit_button("Log in", on_click=password_entered)
 
     def password_entered():
@@ -39,7 +39,7 @@ def check_password():
     # Show inputs for username + password.
     login_form()
     if "password_correct" in st.session_state:
-        st.error("😕 User not known or password incorrect")
+        st.error("😕 Senha ou usuario desconhecido")
     return False
 
 if not check_password():
@@ -73,11 +73,11 @@ def add_entry_form():
         df = pd.DataFrame(data)
         residue_types = df['residue_type'].unique()
 
-        with st.form("Add Entry"):
-            weight = st.number_input("Weight", min_value=0.0, format="%.2f")
-            residue_type = st.selectbox("Residue Type", residue_types)
-            date = st.date_input("Date")
-            submitted = st.form_submit_button("Add Entry")
+        with st.form("Adicionar novo dado"):
+            weight = st.number_input("Peso", min_value=0.0, format="%.2f")
+            residue_type = st.selectbox("Tipo do residuo", residue_types)
+            date = st.date_input("Data")
+            submitted = st.form_submit_button("Adicionar Dado")
             if submitted:
                 response = requests.post(f"{API_URL}/weight", json={
                     "weight": f"{weight:.2f}".replace('.', ','),  # Ensure weight is formatted correctly
@@ -85,19 +85,19 @@ def add_entry_form():
                     "date": date.strftime('%Y-%m-%d')
                 })
                 if response.status_code == 200:
-                    st.success("Entry added successfully!")
+                    st.success("Dado inserido com sucesso!")
                 else:
-                    st.error(f"Failed to add entry: {response.text}")
+                    st.error(f"Falha ao inserir dado: {response.text}")
 
 def add_entry_page():
     """Page to add a new entry to the database."""
-    st.title("Add New Entry")
+    st.title("Adicionar Dado")
     add_entry_form()
 
 def main_page():
     """Main dashboard page."""
     st.title("Dashboard Descartin")
-    st.markdown("Data provided by [Cascais Data](https://data.cascais.pt/)")
+    st.markdown("Dados providos por [Cascais Data](https://data.cascais.pt/)")
 
     data = fetch_data()
     if data:
@@ -164,12 +164,12 @@ def main_page():
 
 def main():
     st.set_page_config(layout="wide")
-    st.sidebar.title("Navigation")
-    page = st.sidebar.radio("Go to", ["Dashboard", "Add Entry"])
+    st.sidebar.title("Menu")
+    page = st.sidebar.radio("Ir para", ["Dashboard", "Adicionar Dado"])
 
     if page == "Dashboard":
         main_page()
-    elif page == "Add Entry":
+    elif page == "Adicionar Dado":
         add_entry_page()
 
 if __name__ == "__main__":

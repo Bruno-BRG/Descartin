@@ -2,10 +2,9 @@ FROM python:3.12.3-slim
 
 WORKDIR /app
 
-# Install the latest version of pip, setuptools, and wheel
-RUN pip install --upgrade pip setuptools wheel
+COPY requirements.txt ./requirements.txt
 
-# Install each package separately
+RUN pip install -r requirements.txt
 RUN pip install streamlit
 RUN pip install requests
 RUN pip install pandas
