@@ -2,16 +2,15 @@ FROM python:3.12.3-slim
 
 WORKDIR /app
 
+# Install system dependencies required for Prophet
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY requirements.txt ./requirements.txt
 
-RUN pip install -r requirements.txt
-RUN pip install streamlit
-RUN pip install requests
-RUN pip install pandas
-RUN pip install matplotlib
-RUN pip install scikit-learn
-RUN pip install numpy
-RUN pip install plotly
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
