@@ -2,11 +2,13 @@ import hmac
 import streamlit as st
 import requests
 import pandas as pd
-import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.graph_objects as go
 import numpy as np
 from sklearn.linear_model import LinearRegression
 
-API_URL = "http://192.81.214.49:8000"  # Use the service name 'api' instead of 'localhost'
+API_URL = "http://localhost:8000"  # Use the service name 'api' instead of 'localhost'
+#API_URL = "http://192.81.214.49:8000"  # Use the service name 'api' instead of 'localhost'
 
 # Main Streamlit app starts here
 def fetch_data():
@@ -72,23 +74,41 @@ def main_page():
         # Ensure the date range covers from 2014 to the most recent date
         df = df[(df.index >= '2014-01-01') & (df.index <= '2024-12-31')]
 
+        # Define common chart settings
+        chart_height = 400
+        chart_width = None  # This will make it use container width
+        common_layout = dict(
+            height=chart_height,
+            margin=dict(l=50, r=50, t=50, b=50),
+            paper_bgcolor='white',
+            plot_bgcolor='white'
+        )
+
         with st.container():
             col1, col2, col3 = st.columns([1, 1, 1])
 
             with col1:
                 st.write("## Distribuição de Peso por tipo de resíduo")
                 weight_distribution = df.groupby('residue_type')['weight'].sum().reset_index()
-                st.bar_chart(weight_distribution.set_index('residue_type'), use_container_width=True)
+                fig = px.bar(weight_distribution.set_index('residue_type'))
+                st.plotly_chart(fig, use_container_width=True)
                 with st.expander("Ver Tabela de Distribuição de Peso por Tipo de Resíduo"):
                     st.dataframe(weight_distribution, use_container_width=True)
 
             with col2:
                 st.write("## Distribuição de Peso por mês")
                 residue_types = df['residue_type'].unique()
-                selected_residue_type = st.selectbox("Selecione o tipo de residuo", residue_types)
-                residue_df = df[df['residue_type'] == selected_residue_type]
+                # Create chart with initial data (first residue type)
+                initial_residue_type = residue_types[0]
+                residue_df = df[df['residue_type'] == initial_residue_type]
                 monthly_weight = residue_df['weight'].resample('ME').sum()
                 st.line_chart(monthly_weight, use_container_width=True)
+                # Move selectbox below the chart
+                selected_residue_type = st.selectbox("Selecione o tipo de residuo", residue_types)
+                if selected_residue_type != initial_residue_type:
+                    residue_df = df[df['residue_type'] == selected_residue_type]
+                    monthly_weight = residue_df['weight'].resample('ME').sum()
+                    st.line_chart(monthly_weight, use_container_width=True)
                 with st.expander(f"Ver Tabela de Distribuição de Peso por Mês para {selected_residue_type}"):
                     st.dataframe(monthly_weight.reset_index(), use_container_width=True)
 
@@ -105,23 +125,37 @@ def main_page():
                 model.fit(X, y)
                 monthly_weight['trend'] = model.predict(X)
 
-                # Plot the line chart with trend line
-                fig, ax = plt.subplots()
-                fig.patch.set_facecolor('black')
-                ax.set_facecolor('black')
-                ax.plot(monthly_weight['date'], monthly_weight['weight'], label='Peso Mensal', color='white')
-                ax.plot(monthly_weight['date'], monthly_weight['trend'], label='Tendencia', linestyle='--', color='red')
-                ax.legend(facecolor='black', framealpha=1, edgecolor='white', labelcolor='white')
-                ax.xaxis.label.set_color('white')
-                ax.yaxis.label.set_color('white')
-                ax.tick_params(axis='x', colors='white')
-                ax.tick_params(axis='y', colors='white')
-                ax.title.set_color('white')
-                for label in ax.get_xticklabels() + ax.get_yticklabels():
-                    label.set_color('white')
-                for spine in ax.spines.values():
-                    spine.set_edgecolor('white')
-                st.pyplot(fig)
+                # Create Plotly figure
+                fig = go.Figure()
+                
+                # Add monthly weight line
+                fig.add_trace(go.Scatter(
+                    x=monthly_weight['date'],
+                    y=monthly_weight['weight'],
+                    name='Peso Mensal',
+                    line=dict(color='#1f77b4')
+                ))
+                
+                # Add trend line
+                fig.add_trace(go.Scatter(
+                    x=monthly_weight['date'],
+                    y=monthly_weight['trend'],
+                    name='Tendencia',
+                    line=dict(color='red', dash='dash')
+                ))
+                
+                # Update layout
+                fig.update_layout(
+                    showlegend=True,
+                    height=400,
+                    margin=dict(l=50, r=50, t=50, b=50),
+                    paper_bgcolor='white',
+                    plot_bgcolor='white',
+                    xaxis_title='Data',
+                    yaxis_title='Peso'
+                )
+                
+                st.plotly_chart(fig, use_container_width=True)
                 with st.expander("Ver Tabela de Distribuição de Peso Mensal com Tendência Linear"):
                     st.dataframe(monthly_weight, use_container_width=True)
 
