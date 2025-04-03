@@ -3,7 +3,7 @@ services:
     build:
       context: ./streamlit
     ports:
-      - "69420:69420"
+      - "8051:8051"
     depends_on:
       - api
 
@@ -11,6 +11,6 @@ services:
     build:
       context: ./API
     ports:
-      - "42069:42069"
+      - "8050:8050"
     volumes:
       - ./API/data.json:/app/data.json

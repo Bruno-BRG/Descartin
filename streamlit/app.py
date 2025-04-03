@@ -14,7 +14,7 @@ import warnings
 warnings.filterwarnings('ignore')  # Suppress Prophet warnings
 
 #API_URL = "http://localhost:8000"  # Use the service name 'api' instead of 'localhost'
-API_URL = "http://192.81.214.49:42069"  # Use the service name 'api' instead of 'localhost'
+API_URL = "http://192.81.214.49:8050"  # Use the service name 'api' instead of 'localhost'
 
 # Main Streamlit app starts here
 def fetch_data():
