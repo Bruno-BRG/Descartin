@@ -1,7 +1,7 @@
 streamlit
-requests
 pandas
-matplotlib
-scikit-learn
 numpy
 plotly
+scikit-learn
+prophet
+scipy

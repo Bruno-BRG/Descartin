@@ -6,6 +6,12 @@ import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
 from sklearn.linear_model import LinearRegression
+from prophet import Prophet
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import IsolationForest
+import warnings
+warnings.filterwarnings('ignore')  # Suppress Prophet warnings
 
 API_URL = "http://localhost:8000"  # Use the service name 'api' instead of 'localhost'
 #API_URL = "http://192.81.214.49:8000"  # Use the service name 'api' instead of 'localhost'
@@ -58,6 +64,62 @@ def add_entry_page():
     """Page to add a new entry to the database."""
     st.title("Adicionar Dado")
     add_entry_form()
+
+def prepare_prophet_data(df, residue_type):
+    """Prepare data for Prophet forecasting."""
+    df_prophet = df[df['residue_type'] == residue_type].copy()
+    df_prophet = df_prophet.reset_index()
+    df_prophet = df_prophet.rename(columns={'date': 'ds', 'weight': 'y'})
+    return df_prophet
+
+def forecast_weights(df_prophet, periods=12):
+    """Generate forecasts using Prophet."""
+    model = Prophet(yearly_seasonality=True, weekly_seasonality=False, daily_seasonality=False)
+    model.fit(df_prophet)
+    future = model.make_future_dataframe(periods=periods, freq='M')
+    forecast = model.predict(future)
+    return forecast
+
+def perform_clustering(df):
+    """Perform clustering on monthly weights by residue type."""
+    # Prepare data for clustering
+    pivot_df = df.reset_index().pivot_table(
+        index='residue_type', 
+        columns=pd.Grouper(key='date', freq='M'), 
+        values='weight',
+        aggfunc='sum'
+    ).fillna(0)
+    
+    # Standardize the features
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(pivot_df)
+    
+    # Perform K-means clustering
+    n_clusters = min(3, len(pivot_df))  # Use at most 3 clusters
+    kmeans = KMeans(n_clusters=n_clusters, random_state=42)
+    clusters = kmeans.fit_predict(X_scaled)
+    
+    # Add clusters to the dataframe
+    pivot_df['Cluster'] = clusters
+    return pivot_df
+
+def detect_anomalies(df, residue_type):
+    """Detect anomalies in weight measurements."""
+    residue_df = df[df['residue_type'] == residue_type].copy()
+    monthly_weights = residue_df['weight'].resample('M').sum().values.reshape(-1, 1)
+    
+    # Train isolation forest
+    iso_forest = IsolationForest(contamination=0.1, random_state=42)
+    anomalies = iso_forest.fit_predict(monthly_weights)
+    
+    # Prepare results
+    monthly_data = residue_df['weight'].resample('M').sum()
+    anomaly_df = pd.DataFrame({
+        'date': monthly_data.index,
+        'weight': monthly_data.values,
+        'is_anomaly': anomalies == -1
+    })
+    return anomaly_df
 
 def main_page():
     """Main dashboard page."""
@@ -158,6 +220,129 @@ def main_page():
                 st.plotly_chart(fig, use_container_width=True)
                 with st.expander("Ver Tabela de Distribuição de Peso Mensal com Tendência Linear"):
                     st.dataframe(monthly_weight, use_container_width=True)
+
+        # Add new ML visualizations
+        st.write("## Análises Avançadas de Machine Learning")
+        
+        # Second row - ML visualizations
+        col4, col5 = st.columns([1, 1])
+        
+        with col4:
+            st.write("### Previsão de Peso Futuro")
+            residue_type = st.selectbox(
+                "Selecione o tipo de resíduo para previsão",
+                df['residue_type'].unique(),
+                key='forecast_select'
+            )
+            
+            # Prepare and run forecast
+            df_prophet = prepare_prophet_data(df, residue_type)
+            with st.spinner('Gerando previsão...'):
+                forecast = forecast_weights(df_prophet)
+                
+                # Create forecast plot
+                fig = go.Figure()
+                
+                # Add actual values
+                fig.add_trace(go.Scatter(
+                    x=df_prophet['ds'],
+                    y=df_prophet['y'],
+                    name='Histórico',
+                    line=dict(color='blue')
+                ))
+                
+                # Add forecast
+                fig.add_trace(go.Scatter(
+                    x=forecast['ds'],
+                    y=forecast['yhat'],
+                    name='Previsão',
+                    line=dict(color='red')
+                ))
+                
+                # Add uncertainty intervals
+                fig.add_trace(go.Scatter(
+                    x=forecast['ds'].tolist() + forecast['ds'].tolist()[::-1],
+                    y=forecast['yhat_upper'].tolist() + forecast['yhat_lower'].tolist()[::-1],
+                    fill='toself',
+                    fillcolor='rgba(0,100,80,0.2)',
+                    line=dict(color='rgba(255,255,255,0)'),
+                    name='Intervalo de Confiança'
+                ))
+                
+                fig.update_layout(
+                    title=f'Previsão de Peso para {residue_type}',
+                    xaxis_title='Data',
+                    yaxis_title='Peso',
+                    hovermode='x unified'
+                )
+                st.plotly_chart(fig, use_container_width=True)
+
+        with col5:
+            st.write("### Detecção de Anomalias")
+            anomaly_residue = st.selectbox(
+                "Selecione o tipo de resíduo para análise de anomalias",
+                df['residue_type'].unique(),
+                key='anomaly_select'
+            )
+            
+            # Perform anomaly detection
+            anomaly_df = detect_anomalies(df, anomaly_residue)
+            
+            # Create anomaly plot
+            fig = go.Figure()
+            
+            # Add normal points
+            normal_points = anomaly_df[~anomaly_df['is_anomaly']]
+            fig.add_trace(go.Scatter(
+                x=normal_points['date'],
+                y=normal_points['weight'],
+                mode='markers',
+                name='Normal',
+                marker=dict(color='blue')
+            ))
+            
+            # Add anomaly points
+            anomaly_points = anomaly_df[anomaly_df['is_anomaly']]
+            fig.add_trace(go.Scatter(
+                x=anomaly_points['date'],
+                y=anomaly_points['weight'],
+                mode='markers',
+                name='Anomalia',
+                marker=dict(color='red', size=10)
+            ))
+            
+            fig.update_layout(
+                title=f'Detecção de Anomalias para {anomaly_residue}',
+                xaxis_title='Data',
+                yaxis_title='Peso',
+                hovermode='x unified'
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
+        # Third row - Clustering visualization
+        st.write("### Agrupamento de Tipos de Resíduos")
+        cluster_df = perform_clustering(df)
+        
+        # Create heatmap of clusters
+        fig = px.imshow(
+            cluster_df.drop('Cluster', axis=1),
+            labels=dict(x="Mês", y="Tipo de Resíduo", color="Peso"),
+            aspect="auto",
+            color_continuous_scale="Viridis"
+        )
+        
+        fig.update_layout(
+            title='Padrões de Peso por Tipo de Resíduo',
+            xaxis_title='Mês',
+            yaxis_title='Tipo de Resíduo'
+        )
+        st.plotly_chart(fig, use_container_width=True)
+        
+        # Show cluster information
+        st.write("#### Grupos Identificados:")
+        for cluster in sorted(cluster_df['Cluster'].unique()):
+            residues = cluster_df[cluster_df['Cluster'] == cluster].index.tolist()
+            st.write(f"Grupo {cluster + 1}: {', '.join(residues)}")
 
 def main():
     st.set_page_config(layout="wide")
